@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: popup.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: popup.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>// // popup.js - Conecta os botões ao background.js
+
+// document.getElementById("updateStock").addEventListener("click", () => {
+//     chrome.runtime.sendMessage({ action: "getStockData" }, response => {
+//         if (response &amp;&amp; response.stock) {
+//             alert("Estoque atualizado:\n" + response.stock);
+//         } else {
+//             alert("Erro ao acessar o estoque.");
+//         }
+//     });
+// });
+
+// // Chave de liga/desliga do bot
+// const toggleBotCheckbox = document.getElementById("toggleBot");
+// const botStatusText = document.getElementById("botStatusText"); // &lt;- elemento de texto
+
+// // Carregar estado salvo e atualizar o checkbox e o texto
+// chrome.storage.local.get("botPaused", data => {
+//     const isPaused = data.botPaused || false;
+//     toggleBotCheckbox.checked = !isPaused; // Se pausado, checkbox desmarcado
+//     botStatusText.textContent = isPaused ? "Bot desativado" : "Bot ativado";
+// });
+
+// // Ao mudar o estado da chave, atualizar o armazenamento, enviar mensagem e atualizar texto
+// toggleBotCheckbox.addEventListener("change", () => {
+//     const isChecked = toggleBotCheckbox.checked;
+//     const newState = !isChecked; // Se marcado, bot está ativo → botPaused = false
+
+//     chrome.storage.local.set({ botPaused: newState }, () => {
+//         chrome.runtime.sendMessage({ action: "toggleBot", state: newState });
+//     });
+
+//     botStatusText.textContent = isChecked ? "Bot ativado" : "Bot desativado";
+// });
+
+
+// popup.js - Conecta os botões ao background.js
+
+/**
+ * Atualiza o estoque ao clicar no botão "updateStock".
+ * Envia mensagem para o background.js e exibe alerta com o resultado.
+ */
+document.getElementById("updateStock").addEventListener("click", () => {
+    chrome.runtime.sendMessage({ action: "getStockData" }, response => {
+        if (response &amp;&amp; response.stock) {
+            alert("Estoque atualizado:\n" + response.stock);
+        } else {
+            alert("Erro ao acessar o estoque.");
+        }
+    });
+});
+
+/**
+ * Referência para o checkbox de liga/desliga do bot.
+ * @type {HTMLInputElement}
+ */
+const toggleBotCheckbox = document.getElementById("toggleBot");
+
+/**
+ * Referência para o elemento de texto que indica o status do bot.
+ * @type {HTMLElement}
+ */
+const botStatusText = document.getElementById("botStatusText");
+
+/**
+ * Carrega o estado salvo do bot no armazenamento local
+ * e atualiza o checkbox e o texto de status.
+ */
+chrome.storage.local.get("botPaused", data => {
+    const isPaused = data.botPaused || false;
+    toggleBotCheckbox.checked = !isPaused; // Se pausado, checkbox desmarcado
+    botStatusText.textContent = isPaused ? "Bot desativado" : "Bot ativado";
+});
+
+/**
+ * Atualiza o estado do bot ao mudar o checkbox.
+ * Salva no armazenamento local, envia mensagem para o background.js
+ * e atualiza o texto de status.
+ */
+toggleBotCheckbox.addEventListener("change", () => {
+    const isChecked = toggleBotCheckbox.checked;
+    const newState = !isChecked; // Se marcado, bot está ativo → botPaused = false
+
+    chrome.storage.local.set({ botPaused: newState }, () => {
+        chrome.runtime.sendMessage({ action: "toggleBot", state: newState });
+    });
+
+    botStatusText.textContent = isChecked ? "Bot ativado" : "Bot desativado";
+});
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#SHEETS_API_URL">SHEETS_API_URL</a></li><li><a href="global.html#botStatusText">botStatusText</a></li><li><a href="global.html#ensureMessageIsRead">ensureMessageIsRead</a></li><li><a href="global.html#fetchStockData">fetchStockData</a></li><li><a href="global.html#getChatName">getChatName</a></li><li><a href="global.html#getMessageFromSheet">getMessageFromSheet</a></li><li><a href="global.html#handleMessage">handleMessage</a></li><li><a href="global.html#logMessageToSheet">logMessageToSheet</a></li><li><a href="global.html#openUnreadChat">openUnreadChat</a></li><li><a href="global.html#registrarMensagem">registrarMensagem</a></li><li><a href="global.html#sendMessage">sendMessage</a></li><li><a href="global.html#toggleBotCheckbox">toggleBotCheckbox</a></li><li><a href="global.html#waitForElement">waitForElement</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Tue Aug 19 2025 22:55:43 GMT-0300 (Horário Padrão de Brasília)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
